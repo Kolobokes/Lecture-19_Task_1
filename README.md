@@ -1,0 +1,1 @@
+# CI Demo [![Build status](https://ci.appveyor.com/api/projects/status/vgyofqa6wdryj42s?svg=true)](https://ci.appveyor.com/project/Kolobokes/lecture-18-task-1)
