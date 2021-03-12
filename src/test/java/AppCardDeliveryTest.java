@@ -52,7 +52,7 @@ public class AppCardDeliveryTest {
         form.$("[data-test-id='phone'] .input__control").setValue("+79054040005");
         form.$(".checkbox__box").click();
         form.$(withText("Забронировать")).click();
-        $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(15));
+        $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(20));
     }
 
     @Test
