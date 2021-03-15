@@ -20,27 +20,18 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class AppCardDeliveryTest {
 
-    public String correctDate() {
+    public String gatDate(int shift) {
         LocalDate date = LocalDate.now();
-        LocalDate plusDate = date.plusDays(4);
+        LocalDate plusDate = date.plusDays(shift);
 
-        DateTimeFormatter df = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        String dateString = df.format(plusDate);
-        return dateString;
-    }
-
-    public String incorrectDate() {
-        LocalDate date = LocalDate.now();
-
-        DateTimeFormatter df = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        String dateString = df.format(date);
+        String dateString = plusDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return dateString;
     }
 
     @Test
     void correctTest(){
 
-        String correctDate = correctDate();
+        String correctDate = gatDate(4);
 
         open("http://localhost:9999");
         SelenideElement form = $("#root");
@@ -58,7 +49,7 @@ public class AppCardDeliveryTest {
     @Test
     void incorrectCityTest(){
 
-        String correctDate = correctDate();
+        String correctDate = gatDate(4);
 
         open("http://localhost:9999");
         SelenideElement form = $("#root");
@@ -76,7 +67,7 @@ public class AppCardDeliveryTest {
     @Test
     void incorrectDateTest(){
 
-        String incorrectDate = incorrectDate();
+        String incorrectDate = gatDate(0);
 
         open("http://localhost:9999");
         SelenideElement form = $("#root");
@@ -94,14 +85,14 @@ public class AppCardDeliveryTest {
     @Test
     void incorrectNameTest(){
 
-        String incorrectDate = incorrectDate();
+        String correctDate = gatDate(4);
 
         open("http://localhost:9999");
         SelenideElement form = $("#root");
         form.$("[data-test-id='city'] .input__control").setValue("Горячий ключ");
         form.$("[data-test-id='date'] .input__control").sendKeys(Keys.chord(Keys.CONTROL, "a"));
         form.$("[data-test-id='date'] .input__control").sendKeys(Keys.DELETE);
-        form.$("[data-test-id='date'] .input__control").setValue(incorrectDate);
+        form.$("[data-test-id='date'] .input__control").setValue(correctDate);
         form.$("[data-test-id='name'] .input__control").setValue("Ivanov Ivan Ivanovich 4");
         form.$("[data-test-id='phone'] .input__control").setValue("+79054040005");
         form.$(".checkbox__box").click();
@@ -112,14 +103,14 @@ public class AppCardDeliveryTest {
     @Test
     void incorrectPhoneTest(){
 
-        String incorrectDate = incorrectDate();
+        String correctDate = gatDate(4);
 
         open("http://localhost:9999");
         SelenideElement form = $("#root");
         form.$("[data-test-id='city'] .input__control").setValue("Горячий ключ");
         form.$("[data-test-id='date'] .input__control").sendKeys(Keys.chord(Keys.CONTROL, "a"));
         form.$("[data-test-id='date'] .input__control").sendKeys(Keys.DELETE);
-        form.$("[data-test-id='date'] .input__control").setValue(incorrectDate);
+        form.$("[data-test-id='date'] .input__control").setValue(correctDate);
         form.$("[data-test-id='name'] .input__control").setValue("Иванов Иван Иванович");
         form.$("[data-test-id='phone'] .input__control").setValue("89054040005");
         form.$(".checkbox__box").click();
@@ -130,14 +121,14 @@ public class AppCardDeliveryTest {
     @Test
     void NotAgreementTest(){
 
-        String incorrectDate = incorrectDate();
+        String correctDate = gatDate(4);
 
         open("http://localhost:9999");
         SelenideElement form = $("#root");
         form.$("[data-test-id='city'] .input__control").setValue("Горячий ключ");
         form.$("[data-test-id='date'] .input__control").sendKeys(Keys.chord(Keys.CONTROL, "a"));
         form.$("[data-test-id='date'] .input__control").sendKeys(Keys.DELETE);
-        form.$("[data-test-id='date'] .input__control").setValue(incorrectDate);
+        form.$("[data-test-id='date'] .input__control").setValue(correctDate);
         form.$("[data-test-id='name'] .input__control").setValue("Иванов Иван Иванович");
         form.$("[data-test-id='phone'] .input__control").setValue("89054040005");
         form.$(withText("Забронировать")).click();
